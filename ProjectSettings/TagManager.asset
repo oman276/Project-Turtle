@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - World Boundary
+  - Enemy
+  - Water
+  - Projectile
+  - Wood
+  - Treadmill
+  - Shockwave
+  - Shatterable
+  - Ball
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Barrier
+  - World Boundary
+  - Wood
+  - Projectile
+  - Enemy
+  - Shockwave
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Background Tilemap
+    uniqueID: 3590282767
+    locked: 0
+  - name: OOB Tilemap
+    uniqueID: 3253697089
+    locked: 0
+  - name: Treadmill
+    uniqueID: 1415767809
+    locked: 0
+  - name: Piston Pipe
+    uniqueID: 2573318725
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
