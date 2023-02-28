@@ -17,6 +17,8 @@ public class EnemyController : MonoBehaviour
     Rigidbody2D rb;
     public bool isFixed = true;
 
+    bool isActive = false;
+
     private void Start()
     {
         InvokeRepeating("FireProjectile", projectileDelay, projectileDelay);
@@ -31,20 +33,25 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 targetPos = player.transform.position;
-        targetPos.z = 0;
-        Vector3 spritePos = this.transform.position;
-        targetPos.x = targetPos.x - spritePos.x;
-        targetPos.y = targetPos.y - spritePos.y;
+        if (isActive)
+        {
+            Vector3 targetPos = player.transform.position;
+            targetPos.z = 0;
+            Vector3 spritePos = this.transform.position;
+            targetPos.x = targetPos.x - spritePos.x;
+            targetPos.y = targetPos.y - spritePos.y;
 
-        float angle = Mathf.Atan2(targetPos.y, targetPos.x) * Mathf.Rad2Deg;
-        this.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90f));
+            float angle = Mathf.Atan2(targetPos.y, targetPos.x) * Mathf.Rad2Deg;
+            this.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90f));
+        }
     }
 
     void FireProjectile() {
-        GameObject currentProj = Instantiate(projectilePrefab, firepoint.position, Quaternion.identity);
-        Vector3 direction = player.transform.position - this.transform.position;
-        currentProj.GetComponent<Rigidbody2D>().velocity = projectileForce * direction.normalized;
+        if (isActive) {
+            GameObject currentProj = Instantiate(projectilePrefab, firepoint.position, Quaternion.identity);
+            Vector3 direction = player.transform.position - this.transform.position;
+            currentProj.GetComponent<Rigidbody2D>().velocity = projectileForce * direction.normalized;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -60,5 +67,21 @@ public class EnemyController : MonoBehaviour
         Destroy(tempFX, 1f);
         gameManager.EnemyDefeated();
         Destroy(this.gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            isActive = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            isActive = false;
+        }
     }
 }

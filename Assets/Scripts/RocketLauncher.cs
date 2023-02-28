@@ -65,7 +65,9 @@ public class RocketLauncher : MonoBehaviour
             if (angle < 0) {
                 angle += 360;
             }
-            
+
+            //print(angle);
+
             //Case N
             if(position == 'N' || position == 'n')
             {
@@ -75,17 +77,20 @@ public class RocketLauncher : MonoBehaviour
             //Case E
             else if (position == 'E' || position == 'e')
             {
-
+                if (angle > 90 && angle <= 180) angle = 90;
+                else if (angle > 180 && angle <= 270) angle = 270;
             }
             //Case S
             else if (position == 'S' || position == 's')
             {
-
+                if (angle <= 90) angle = 0;
+                else if (angle > 90 && angle <= 180) angle = 180;
             }
             //Case W
             else if (position == 'W' || position == 'w')
             {
-
+                if (angle < 90) angle = 90;
+                else if (angle >= 270) angle = 270;
             }
 
 

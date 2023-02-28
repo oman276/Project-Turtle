@@ -28,6 +28,12 @@ public class Rocket : MonoBehaviour
     {
         Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
 
+        //Triggers to not explode when in contact with
+        if (collision.gameObject.tag == "Debris" || collision.gameObject.tag == "Water"
+            || collision.gameObject.tag == "Treadmill") {
+            return;
+        }
+
         //Rocket Launcher: Destroy
         RocketLauncher rl = collision.gameObject.GetComponent<RocketLauncher>();
         if (rl)
@@ -44,6 +50,9 @@ public class Rocket : MonoBehaviour
         //Enemy: Destroy
         EnemyController ec = collision.gameObject.GetComponent<EnemyController>();
         if (ec) {
+            if (collision.isTrigger) {
+                return;
+            }
             ec.EnemyDefeated();
         }
 

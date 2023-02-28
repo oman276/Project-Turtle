@@ -13,6 +13,7 @@ TagManager:
   - Shockwave
   - Shatterable
   - Ball
+  - Debris
   layers:
   - Default
   - TransparentFX

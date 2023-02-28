@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7137395460353831779}
   - component: {fileID: 7137395460353831780}
   - component: {fileID: 7137395460353831778}
+  - component: {fileID: 3278717261993170973}
   m_Layer: 10
   m_Name: Enemy Robot
   m_TagString: Enemy
@@ -102,6 +103,22 @@ MonoBehaviour:
   projectileDelay: 1.5
   explosionFX: {fileID: 5904827051141144812, guid: ebad8a0b439371045a186f30378b4afa, type: 3}
   isFixed: 1
+--- !u!58 &3278717261993170973
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7137395460353831782}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 10
 --- !u!1 &7137395460983435538
 GameObject:
   m_ObjectHideFlags: 0

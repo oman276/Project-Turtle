@@ -37,8 +37,15 @@ public class ExplosiveBarrel : MonoBehaviour
         }
         destroyed = true;
 
-        staticObjectArray.ForEach(ExplodeLoop);
-        dynamicObjectArray.ForEach(ExplodeLoop);
+        //staticObjectArray.ForEach(ExplodeLoop);
+        //dynamicObjectArray.ForEach(ExplodeLoop);
+        foreach (GameObject g in staticObjectArray.ToArray()) {
+            ExplodeLoop(g);
+        }
+        foreach (GameObject g in dynamicObjectArray.ToArray())
+        {
+            ExplodeLoop(g);
+        }
         GameObject tempFX = Instantiate(explosionEffect, this.transform.position,
             this.transform.rotation);
         Destroy(tempFX, 1f);
