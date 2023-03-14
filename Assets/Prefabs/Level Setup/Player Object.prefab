@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 22582367}
   - component: {fileID: 22582369}
   - component: {fileID: 22582368}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 1016765201}
   - component: {fileID: 1016765203}
   - component: {fileID: 1016765202}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   - component: {fileID: 1279482952}
   - component: {fileID: 1279482951}
   - component: {fileID: 1279482950}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Health Bar Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -263,7 +263,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1566702007}
   - component: {fileID: 1566702008}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Health Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -353,7 +353,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5011035035009910565}
   - component: {fileID: 5011035035009910564}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Player Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -438,7 +438,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5011035035202155223}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Particle Release Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -470,7 +470,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5011035035513094183}
   - component: {fileID: 5011035035513094182}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -556,7 +556,7 @@ GameObject:
   - component: {fileID: 5011035035704822006}
   - component: {fileID: 5011035035704821961}
   - component: {fileID: 5011035035704821960}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Player Object
   m_TagString: Player
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
@@ -643,6 +643,7 @@ MonoBehaviour:
   releasePoint: {fileID: 5011035035202155220}
   releaseFX: {fileID: 555034920435808957, guid: c7e2439ff0b54334fbd6eb01a0ddad57, type: 3}
   tempArrow: {fileID: 5011035035513094180}
+  onTreadmill: 0
   speedReduction: 0.25
   maxLineDistance: 8
   debugLineMultiplier: 0.01
@@ -697,7 +698,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5011035036420977182}
   - component: {fileID: 5011035036420977169}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Directional Orb
   m_TagString: Untagged
   m_Icon: {fileID: 0}

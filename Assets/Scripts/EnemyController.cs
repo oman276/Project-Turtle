@@ -19,6 +19,8 @@ public class EnemyController : MonoBehaviour
 
     bool isActive = false;
 
+    public float rotateSpeed = 50f;
+
     private void Start()
     {
         InvokeRepeating("FireProjectile", projectileDelay, projectileDelay);
@@ -42,7 +44,12 @@ public class EnemyController : MonoBehaviour
             targetPos.y = targetPos.y - spritePos.y;
 
             float angle = Mathf.Atan2(targetPos.y, targetPos.x) * Mathf.Rad2Deg;
-            this.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90f));
+            angle = angle + 90f;
+            float step = rotateSpeed * Time.deltaTime;
+            //this.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90f));
+            this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation,
+                Quaternion.Euler(new Vector3(0, 0, angle)), step);
+
         }
     }
 

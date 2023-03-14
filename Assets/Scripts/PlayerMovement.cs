@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     bool canMove = true;
 
     GameManager gameManager;
-    int onTreadmill = 0;
+    public int onTreadmill = 0;
     
     public float speedReduction = 0.3f;
 

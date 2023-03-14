@@ -14,6 +14,7 @@ TagManager:
   - Shatterable
   - Ball
   - Debris
+  - Turbine
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - Projectile
   - Enemy
   - Shockwave
-  - 
+  - Player
   - 
   - 
   - 

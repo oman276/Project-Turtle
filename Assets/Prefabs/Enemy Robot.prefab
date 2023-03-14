@@ -103,6 +103,7 @@ MonoBehaviour:
   projectileDelay: 1.5
   explosionFX: {fileID: 5904827051141144812, guid: ebad8a0b439371045a186f30378b4afa, type: 3}
   isFixed: 1
+  rotateSpeed: 120
 --- !u!58 &3278717261993170973
 CircleCollider2D:
   m_ObjectHideFlags: 0
