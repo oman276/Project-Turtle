@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour
     public GameObject projectilePrefab;
     public float projectileForce = 3f;
     public float projectileDelay = 1.7f;
+    public float projectileAppearAt = 0.7f;
 
     public GameObject explosionFX;
 
@@ -21,21 +22,55 @@ public class EnemyController : MonoBehaviour
 
     public float rotateSpeed = 50f;
 
+    public bool canRotate = true;
+
+    public GameObject tempSpr;
+    ObjectFade objectFade;
+    float timer;
+    bool fadeBegun = false;
+
     private void Start()
     {
-        InvokeRepeating("FireProjectile", projectileDelay, projectileDelay);
+        timer = Time.time;
+
+        objectFade = FindObjectOfType<ObjectFade>();
+        //tempSpr = Find
+
+        //InvokeRepeating("FireProjectile", projectileDelay, projectileDelay);
         gameManager = FindObjectOfType<GameManager>();
         rb = GetComponent<Rigidbody2D>();
         if (isFixed) {
             rb.constraints = RigidbodyConstraints2D.FreezePositionX | 
                 RigidbodyConstraints2D.FreezePosition;
         }
+
+        player = GameObject.Find("Player Object");
+        if (!player)
+        {
+            Debug.LogWarning("No Player Found by Enemy");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isActive)
+        //Fade in
+        if (!fadeBegun && Time.time - timer >= projectileAppearAt) {
+            fadeBegun = true;
+            objectFade.FadeIn(projectileDelay - projectileAppearAt - 0.05f, tempSpr);
+        }
+
+        //Time Projectile Fire
+        else if (Time.time - timer >= projectileDelay) {
+            FireProjectile();
+            SpriteRenderer i = tempSpr.GetComponent<SpriteRenderer>();
+            i.color = new Color(i.color.r, i.color.g, i.color.b, 0);
+            timer = Time.time;
+            fadeBegun = false;
+        }
+
+        //Rotate Player
+        if (isActive && canRotate)
         {
             Vector3 targetPos = player.transform.position;
             targetPos.z = 0;
@@ -56,7 +91,8 @@ public class EnemyController : MonoBehaviour
     void FireProjectile() {
         if (isActive) {
             GameObject currentProj = Instantiate(projectilePrefab, firepoint.position, Quaternion.identity);
-            Vector3 direction = player.transform.position - this.transform.position;
+            //Vector3 direction = player.transform.position - this.transform.position;
+            Vector3 direction = -this.transform.up;
             currentProj.GetComponent<Rigidbody2D>().velocity = projectileForce * direction.normalized;
         }
     }

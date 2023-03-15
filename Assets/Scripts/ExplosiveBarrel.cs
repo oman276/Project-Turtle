@@ -100,6 +100,8 @@ public class ExplosiveBarrel : MonoBehaviour
     {
         Rigidbody2D enteredRB = collision.gameObject.GetComponent<Rigidbody2D>();
 
+        if (collision.gameObject.tag == "Enemy") return;
+
         if (enteredRB) {
             dynamicObjectArray.Add(collision.gameObject);
         }

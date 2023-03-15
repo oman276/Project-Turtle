@@ -252,8 +252,8 @@ public class PlayerMovement : MonoBehaviour
                 healthSlider.value = health;
                 //fill.color = gradient.Evaluate(healthSlider.normalizedValue);
                 if (health >= timeToDeath) {
-                    objectFade.FadeOutImage(1.5f, background);
-                    objectFade.FadeOutImage(1.5f, fill);
+                    objectFade.FadeOut(1.5f, background);
+                    objectFade.FadeOut(1.5f, fill);
                 }
             }
         } 
@@ -334,8 +334,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.tag == "Water")
         {
-            objectFade.FadeInImage(0.1f, background);
-            objectFade.FadeInImage(0.1f, fill);
+            objectFade.FadeIn(0.1f, background);
+            objectFade.FadeIn(0.1f, fill);
             ++waterCount;
         }
         else if (collision.gameObject.tag == "Treadmill") {
