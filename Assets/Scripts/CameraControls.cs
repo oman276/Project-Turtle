@@ -23,6 +23,14 @@ public class CameraControls : MonoBehaviour
     float sizeBase = 5f;
     Camera cam;
 
+
+    //Map View Setup
+    bool isMapScaleKey = false;
+    bool isMapScaleStart = true;
+    public float mapScale;
+    public Transform mapTransform;
+    float scaleZoomSpeed = 5f;
+
     PlayerMovement pm;
     Rigidbody2D rb;
 
@@ -31,17 +39,22 @@ public class CameraControls : MonoBehaviour
         cam = cameraObject.GetComponent<Camera>();
         pm = FindObjectOfType<PlayerMovement>();
         rb = pm.gameObject.GetComponent<Rigidbody2D>();
+        Invoke("startEnable", 3f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = 
-            Vector3.Lerp(this.transform.position, new Vector3(player.transform.position.x, 
-            player.transform.position.y, -10f), speed * Time.deltaTime);
 
-        //Zoom in/out
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            isMapScaleKey = true;
+        }
+        else if (Input.GetKeyUp(KeyCode.M)) {
+            isMapScaleKey = false;
+        }
         
+        //Zoom in/out
         float scrollVal = Input.GetAxis("Mouse ScrollWheel");
         sizeBase -= scrollVal;
             
@@ -66,12 +79,32 @@ public class CameraControls : MonoBehaviour
             sizeModified = sizeBase + speedPercent * speedZoomInFactor;
         }
 
-        sizeTarget = Mathf.Lerp(sizeTarget, sizeModified, 0.025f);
+        if (!isMapScaleKey && !isMapScaleStart) sizeTarget = Mathf.Lerp(sizeTarget, sizeModified, 0.025f);
+        else sizeTarget = mapScale;
 
         size = Mathf.Lerp(size, sizeTarget, zoomSpeed);
-        cam.orthographicSize = size;
+
+        //Normal Cam Movement
+        if (!isMapScaleKey && !isMapScaleStart)
+        {
+            this.transform.position =
+                Vector3.Lerp(this.transform.position, new Vector3(player.transform.position.x,
+                player.transform.position.y, -10f), speed * Time.deltaTime);
+            cam.orthographicSize = size;
+        }
+        //Map Scale
+        else {
+            this.transform.position = mapTransform.position;
+            //cam.orthographicSize = mapScale;
+            //Vector3.Lerp(this.transform.position, mapTransform.position, speed * Time.deltaTime);
+            cam.orthographicSize = size;
+        }
+            
     }
 
+    void startEnable() {
+        isMapScaleStart = false;
+    }
 
     public IEnumerator ShakeCurve(float duration, float velocity)
     {

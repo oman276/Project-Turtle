@@ -61,12 +61,12 @@ public class Turbine : MonoBehaviour
     private void Update()
     {
         if (activeAE && active) {
-            print(transform.right);
+            //print(transform.right);
             RaycastHit2D hit = Physics2D.Raycast(player.transform.position, -transform.right,
                 Mathf.Infinity, blockLayer);
             if (hit)
             {
-                print(hit.collider.gameObject.name);
+                //print(hit.collider.gameObject.name);
                 if (hit.collider.gameObject.tag == "Turbine")
                 {
                     ae.forceMagnitude = maxMag;

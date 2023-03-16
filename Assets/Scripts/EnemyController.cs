@@ -31,6 +31,10 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
+        SpriteRenderer i = tempSpr.GetComponent<SpriteRenderer>();
+        i.color = new Color(i.color.r, i.color.g, i.color.b, 0);
+
+        tempSpr.SetActive(false);
         timer = Time.time;
 
         objectFade = FindObjectOfType<ObjectFade>();
@@ -54,19 +58,24 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Fade in
-        if (!fadeBegun && Time.time - timer >= projectileAppearAt) {
-            fadeBegun = true;
-            objectFade.FadeIn(projectileDelay - projectileAppearAt - 0.05f, tempSpr);
-        }
+        if (isActive)
+        {
+            //Fade in
+            if (!fadeBegun && Time.time - timer >= projectileAppearAt)
+            {
+                fadeBegun = true;
+                objectFade.FadeIn(projectileDelay - projectileAppearAt - 0.05f, tempSpr);
+            }
 
-        //Time Projectile Fire
-        else if (Time.time - timer >= projectileDelay) {
-            FireProjectile();
-            SpriteRenderer i = tempSpr.GetComponent<SpriteRenderer>();
-            i.color = new Color(i.color.r, i.color.g, i.color.b, 0);
-            timer = Time.time;
-            fadeBegun = false;
+            //Time Projectile Fire
+            else if (Time.time - timer >= projectileDelay)
+            {
+                FireProjectile();
+                SpriteRenderer i = tempSpr.GetComponent<SpriteRenderer>();
+                i.color = new Color(i.color.r, i.color.g, i.color.b, 0);
+                timer = Time.time;
+                fadeBegun = false;
+            }
         }
 
         //Rotate Player
@@ -116,6 +125,7 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            tempSpr.SetActive(true);
             isActive = true;
         }
     }
@@ -125,6 +135,9 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             isActive = false;
+            SpriteRenderer i = tempSpr.GetComponent<SpriteRenderer>();
+            i.color = new Color(i.color.r, i.color.g, i.color.b, 0);
+            tempSpr.SetActive(false);
         }
     }
 }
