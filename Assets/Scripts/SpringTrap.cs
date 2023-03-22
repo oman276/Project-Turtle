@@ -51,11 +51,11 @@ public class SpringTrap : MonoBehaviour
             if (arm.transform.localRotation != Quaternion.Euler(0, 0, 0))
             {
                 float step = extendSpeed * Time.deltaTime;
-                arm.transform.rotation = Quaternion.RotateTowards(arm.transform.rotation,
+                arm.transform.localRotation = Quaternion.RotateTowards(arm.transform.localRotation,
                     Quaternion.Euler(0, 0, 0), step);
             }
             else {
-                arm.transform.rotation = Quaternion.Euler(0, 0, 0);
+                arm.transform.localRotation = Quaternion.Euler(0, 0, 0);
                 state = 4;
             }
         }
@@ -63,12 +63,12 @@ public class SpringTrap : MonoBehaviour
             if (arm.transform.localRotation != Quaternion.Euler(0, 0, 90))
             {
                 float step = retractSpeed * Time.deltaTime;
-                arm.transform.rotation = Quaternion.RotateTowards(arm.transform.rotation,
+                arm.transform.localRotation = Quaternion.RotateTowards(arm.transform.localRotation,
                     Quaternion.Euler(0, 0, 90), step);
             }
             else
             {
-                arm.transform.rotation = Quaternion.Euler(0, 0, 90);
+                arm.transform.localRotation = Quaternion.Euler(0, 0, 90);
                 state = 1;
             }
         }

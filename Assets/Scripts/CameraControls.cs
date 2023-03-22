@@ -13,15 +13,17 @@ public class CameraControls : MonoBehaviour
 
     public float zoomSpeed = 1f;
     public float zoomLowLimit = 3f;
-    public float zoomUpLimit = 10f;
+    public float zoomUpLimit = 12f;
 
     public float dragZoomInFactor = 1.5f;
     public float speedZoomInFactor = 0.5f;
-    float size = 5f;
-    float sizeTarget = 5f;
-    float sizeModified = 5f;
-    float sizeBase = 5f;
+    float size = 7f;
+    float sizeTarget = 7f;
+    float sizeModified = 7f;
+    float sizeBase = 7f;
     Camera cam;
+
+    public bool shakeEnabled = true;
 
 
     //Map View Setup
@@ -172,11 +174,16 @@ public class CameraControls : MonoBehaviour
     }
 
     public void Shake(float duration, float velocity, bool isFlat = true) {
-        if (isFlat) {
-            StartCoroutine(ShakeFlat(duration, velocity));
-        }
-        else {
-            StartCoroutine(ShakeCurve(duration, velocity));
+        if (shakeEnabled)
+        {
+            if (isFlat)
+            {
+                StartCoroutine(ShakeFlat(duration, velocity));
+            }
+            else
+            {
+                StartCoroutine(ShakeCurve(duration, velocity));
+            }
         }
     }
 }
