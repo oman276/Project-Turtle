@@ -14,6 +14,7 @@ public class SpringTrap : MonoBehaviour
     public float activationDelay = 1f;
     public float extendSpeed = 4f;
     public float retractSpeed = 0.5f;
+    bool playerIn = false;
 
     //STATE MACHINE
 
@@ -54,12 +55,17 @@ public class SpringTrap : MonoBehaviour
                 arm.transform.localRotation = Quaternion.RotateTowards(arm.transform.localRotation,
                     Quaternion.Euler(0, 0, 0), step);
             }
-            else {
+            else
+            {
                 arm.transform.localRotation = Quaternion.Euler(0, 0, 0);
                 state = 4;
             }
         }
-        else if (state == 5) {
+        else if (state == 4) {
+            if (!playerIn) state = 5;
+        }
+        else if (state == 5)
+        {
             if (arm.transform.localRotation != Quaternion.Euler(0, 0, 90))
             {
                 float step = retractSpeed * Time.deltaTime;
@@ -79,6 +85,7 @@ public class SpringTrap : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
+            playerIn = true;
             if (state == 1)
             {
                 timer = Time.time;
@@ -93,15 +100,18 @@ public class SpringTrap : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Player") {
+            playerIn = false;
+            //state = 5;
             /*
             if (state == 2)
             {
                 state = 1;
             }
-            */
+            
             if (state == 3 || state == 4) {
                 state = 5;
             }
+            */
         }
     }
 }

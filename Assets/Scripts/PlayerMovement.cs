@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
 
     public Transform sliderCenter;
     public Transform sliderEdge;
-    
+
     public float rbVelocityUpperLimit = 0.7f;
 
     public GameObject playerSprite;
@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
     GameManager gameManager;
     public int onTreadmill = 0;
-    
+
     public float speedReduction = 0.3f;
 
     //TRAJECTORY LINE
@@ -63,6 +63,8 @@ public class PlayerMovement : MonoBehaviour
     public Image background;
     ObjectFade objectFade;
 
+    int onBridge = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -76,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
         objectFade = FindObjectOfType<ObjectFade>();
 
         for (int i = 0; i < circleNum; ++i) {
-            trajCirArray[i] = Instantiate(trajectoryCircle, transform.position, Quaternion.identity);
+            trajCirArray[i] = Instantiate(trajectoryCircle, transform);
             trajCirArray[i].SetActive(true);
         }
 
@@ -154,8 +156,8 @@ public class PlayerMovement : MonoBehaviour
 
                 float magnitudePercent = dirMag / maxDistance;
                 float totalLineDistance = maxLineDistance * magnitudePercent;
-                
-                
+
+
                 {
                     List<Vector2> points = new List<Vector2>();
 
@@ -179,8 +181,17 @@ public class PlayerMovement : MonoBehaviour
                     float inc = 1 / circleNum;
                     for (int i = 0; i < circleNum; ++i)
                     {
-                        trajCirArray[i].transform.position = ReturnPoint(points, 
-                            totalLineDistance * (inc + inc * i));
+
+                        if (magnitudePercent == 0)
+                        {
+                            trajCirArray[i].transform.localPosition = new Vector3(0, 0, 0);
+                        }
+                        else
+                        {
+                            trajCirArray[i].transform.position = ReturnPoint(points,
+                                totalLineDistance * (inc + inc * i));
+                        }
+                        
                     }
                 }
             }
@@ -237,7 +248,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (waterCount > 0)
+        if (waterCount > 0 && onBridge == 0)
         {
             health -= Time.deltaTime;
             healthSlider.value = health;
@@ -252,17 +263,18 @@ public class PlayerMovement : MonoBehaviour
                 healthSlider.value = health;
                 //fill.color = gradient.Evaluate(healthSlider.normalizedValue);
                 if (health >= timeToDeath) {
+                    health = timeToDeath;
                     objectFade.FadeOut(1.5f, background);
                     objectFade.FadeOut(1.5f, fill);
                 }
             }
-        } 
+        }
     }
 
     void AddPoints(List<Vector2> list, Vector2 startPos, Vector2 direction, float distance) {
 
         list.Add(startPos);
-        
+
         RaycastHit2D hit = Physics2D.Raycast(startPos, direction, distance, trajectoryLayer);
         if (hit.collider == null) //No Hit
         {
@@ -283,8 +295,8 @@ public class PlayerMovement : MonoBehaviour
         if (distance == 0) {
             return new Vector2(0, 0);
         }
-        
-        Vector2 result = list[list.Count-1];
+
+        Vector2 result = list[list.Count - 1];
 
         for (int i = 1; i < list.Count; ++i) {
             float segmentDistance = Vector2.Distance(list[i - 1], list[i]);
@@ -314,8 +326,20 @@ public class PlayerMovement : MonoBehaviour
         slideThumbstick.SetActive(active);
         for (int i = 0; i < circleNum; ++i)
         {
+            trajCirArray[i].transform.localPosition = new Vector3(0, 0, 0);
+            //trajCirArray[i].GetComponent<s>
             trajCirArray[i].SetActive(active);
         }
+    }
+
+    public void addBridge() {
+        ++onBridge;
+        print("++ onBridge: " + onBridge);
+    }
+
+    public void removeBridge() {
+        --onBridge;
+        print("-- onBridge: " + onBridge);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -349,6 +373,10 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.tag == "Water")
         {
             --waterCount;
+            if (health == timeToDeath) {
+                objectFade.FadeOut(1.5f, background);
+                objectFade.FadeOut(1.5f, fill);
+            }
         }
         else if (collision.gameObject.tag == "Treadmill")
         {

@@ -30,7 +30,7 @@ public class Rocket : MonoBehaviour
 
         //Triggers to not explode when in contact with
         if (collision.gameObject.tag == "Debris" || collision.gameObject.tag == "Water"
-            || collision.gameObject.tag == "Treadmill") {
+            || collision.gameObject.tag == "Treadmill" || collision.gameObject.tag == "Bridge") {
             return;
         }
 

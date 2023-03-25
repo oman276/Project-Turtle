@@ -15,6 +15,7 @@ TagManager:
   - Ball
   - Debris
   - Turbine
+  - Bridge
   layers:
   - Default
   - TransparentFX
@@ -63,4 +64,7 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Player
+    uniqueID: 3351443133
     locked: 0

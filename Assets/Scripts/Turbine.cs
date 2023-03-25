@@ -22,8 +22,13 @@ public class Turbine : MonoBehaviour
 
     bool active = true;
     public bool willLoop = true;
-    public float initDelay = 3f;
-    public float loopDelay = 3f;
+    //public float initDelay = 3f;
+    //public float loopDelay = 3f;
+
+    public float timeOn = 3f;
+    public float timeOff = 3f;
+    //float curDelay;
+    float timer;
 
     public ParticleSystem effect;
 
@@ -55,11 +60,30 @@ public class Turbine : MonoBehaviour
         sr = GetComponentInChildren<SpriteRenderer>();
         effect.Play();
 
-        if(willLoop) InvokeRepeating("changeOn", initDelay, loopDelay);
+        //if(willLoop) InvokeRepeating("changeOn", initDelay, loopDelay);
+        timer = Time.time;
+        //curDelay = timeOn;
     }
 
     private void Update()
     {
+        if (willLoop) {
+            if (active && Time.time - timer >= timeOn)
+            {
+                effect.Stop();
+                sr.sprite = offSpr;
+                ae.forceMagnitude = 0;
+                active = false;
+                timer = Time.time;
+            }
+            else if(!active && Time.time - timer >= timeOff) {
+                effect.Play();
+                sr.sprite = onSpr;
+                active = true;
+                timer = Time.time;
+            }
+        }
+
         if (activeAE && active) {
             //print(transform.right);
             RaycastHit2D hit = Physics2D.Raycast(player.transform.position, -transform.right,
@@ -77,6 +101,8 @@ public class Turbine : MonoBehaviour
                 }
             }
         }
+
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
