@@ -93,6 +93,14 @@ public class CrumblingBridge : MonoBehaviour
                 }
             }
         }
+
+        else if (collision.gameObject.tag == "Rolling Projectile") {
+            if (state == 1)
+            {
+                state = 2;
+                timer = Time.time;
+            }
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)

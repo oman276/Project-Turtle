@@ -15,7 +15,9 @@ TagManager:
   - Ball
   - Debris
   - Turbine
-  - Bridge
+  - Rolling Projectile
+  - Rocket
+  - Portal
   layers:
   - Default
   - TransparentFX
@@ -30,8 +32,8 @@ TagManager:
   - Enemy
   - Shockwave
   - Player
-  - 
-  - 
+  - Rolling Projectile
+  - Debris
   - 
   - 
   - 

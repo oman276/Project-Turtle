@@ -9,7 +9,8 @@ public class Shatterable : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Projectile" || 
-            collision.gameObject.tag == "Shockwave" || collision.gameObject.tag == "Ball")
+            collision.gameObject.tag == "Shockwave" || collision.gameObject.tag == "Ball"
+            || collision.gameObject.tag == "Rolling Projectile")
         {
             Shatter(collision.transform.position, collision.gameObject);
         }

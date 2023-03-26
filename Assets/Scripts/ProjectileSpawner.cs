@@ -9,13 +9,21 @@ public class ProjectileSpawner : MonoBehaviour
     public float initDelay = 10f;
     public Transform spawnpoint;
 
+    public bool delayedDeath = false;
+    public float newDelay = 10f;
+
     private void Start()
     {
         InvokeRepeating("Spawn", initDelay, delay);
     }
 
     void Spawn() {
-        Instantiate(projectile, spawnpoint.position, this.transform.rotation);
+        GameObject proj = Instantiate(projectile, spawnpoint.position, this.transform.rotation);
+        if (delayedDeath) {
+            RollingProjectile rp = proj.GetComponent<RollingProjectile>();
+            rp.delay = 10f;
+            rp.GetComponent<Rigidbody2D>().gravityScale = 1f;
+        }
     }
 }
    

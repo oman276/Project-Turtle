@@ -33,15 +33,18 @@ public class RollingProjectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        rb.velocity /= 2;
-        spinForce /= 2;
-        rotationSpeed = Random.Range(-60, 60f);
-        if (rotationSpeed < 20f && rotationSpeed > -20f)
+        if (collision.gameObject.tag != "Debris")
         {
-            rotationSpeed = 20f;
-        }
+            rb.velocity /= 2;
+            spinForce /= 2;
+            rotationSpeed = Random.Range(-60, 60f);
+            if (rotationSpeed < 20f && rotationSpeed > -20f)
+            {
+                rotationSpeed = 20f;
+            }
 
-        Invoke("Delete", delay);
+            Invoke("Delete", delay);
+        }
     }
 
     void Delete() {
