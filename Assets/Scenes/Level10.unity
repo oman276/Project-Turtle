@@ -1277,6 +1277,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4681780374756708023, guid: f532b1d68eb08024fba39575fbf9b8b8, type: 3}
+      propertyPath: moveSpeed
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 4681780375836166632, guid: f532b1d68eb08024fba39575fbf9b8b8, type: 3}
       propertyPath: m_Name
       value: Horizontal Barrier

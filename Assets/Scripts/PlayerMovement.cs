@@ -109,7 +109,7 @@ public class PlayerMovement : MonoBehaviour
         if (canMove)
         {
             //Begin Dragging Process
-            if (Input.GetMouseButtonDown(0) && !gameManager.paused)
+            if (Input.GetMouseButtonDown(0) && !gameManager.paused && !camControls.isMapScaleButton)
             {
                 dragging = true;
                 slideBackground.transform.position = Input.mousePosition;

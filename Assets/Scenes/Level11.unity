@@ -2204,7 +2204,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4681780374756708023, guid: f532b1d68eb08024fba39575fbf9b8b8, type: 3}
       propertyPath: moveSpeed
-      value: 0.13
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 4681780374756708023, guid: f532b1d68eb08024fba39575fbf9b8b8, type: 3}
       propertyPath: movingRight
@@ -2640,7 +2640,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4681780374756708023, guid: f532b1d68eb08024fba39575fbf9b8b8, type: 3}
       propertyPath: moveSpeed
-      value: 0.13
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 4681780374756708023, guid: f532b1d68eb08024fba39575fbf9b8b8, type: 3}
       propertyPath: movingRight

@@ -28,6 +28,7 @@ public class CameraControls : MonoBehaviour
 
     //Map View Setup
     bool isMapScaleKey = false;
+    public bool isMapScaleButton = false;
     bool isMapScaleStart = true;
     public float mapScale;
     public Transform mapTransform;
@@ -41,7 +42,7 @@ public class CameraControls : MonoBehaviour
         cam = cameraObject.GetComponent<Camera>();
         pm = FindObjectOfType<PlayerMovement>();
         rb = pm.gameObject.GetComponent<Rigidbody2D>();
-        Invoke("startEnable", 3f);
+        Invoke("startEnable", 1.5f);
     }
 
     // Update is called once per frame
@@ -81,24 +82,27 @@ public class CameraControls : MonoBehaviour
             sizeModified = sizeBase + speedPercent * speedZoomInFactor;
         }
 
-        if (!isMapScaleKey && !isMapScaleStart) sizeTarget = Mathf.Lerp(sizeTarget, sizeModified, 0.025f);
+        if (!isMapScaleKey && !isMapScaleStart && !isMapScaleButton)
+        {
+            sizeTarget = Mathf.Lerp(sizeTarget, sizeModified, 0.025f);
+        }
         else sizeTarget = mapScale;
 
         size = Mathf.Lerp(size, sizeTarget, zoomSpeed);
 
-        //Normal Cam Movement
-        if (!isMapScaleKey && !isMapScaleStart)
-        {
-            this.transform.position =
-                Vector3.Lerp(this.transform.position, new Vector3(player.transform.position.x,
-                player.transform.position.y, -10f), speed * Time.deltaTime);
-            cam.orthographicSize = size;
-        }
         //Map Scale
-        else {
+        if (isMapScaleKey || isMapScaleStart || isMapScaleButton) 
+        {
             this.transform.position = mapTransform.position;
             //cam.orthographicSize = mapScale;
             //Vector3.Lerp(this.transform.position, mapTransform.position, speed * Time.deltaTime);
+            cam.orthographicSize = size;    
+        }
+        //Normal camera Movement
+        else {
+            this.transform.position =
+                Vector3.Lerp(this.transform.position, new Vector3(player.transform.position.x,
+                player.transform.position.y, -10f), speed * Time.deltaTime);
             cam.orthographicSize = size;
         }
             
@@ -185,5 +189,13 @@ public class CameraControls : MonoBehaviour
                 StartCoroutine(ShakeCurve(duration, velocity));
             }
         }
+    }
+
+    public void MapButtonOn() {
+        isMapScaleButton = true;
+    }
+
+    public void MapButtonOff() {
+        isMapScaleButton = false;
     }
 }

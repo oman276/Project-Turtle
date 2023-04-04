@@ -149,6 +149,16 @@ public class MainMenuController : MonoBehaviour
         SceneManager.LoadScene("Level25");
     }
 
+    public void PlayLevel26()
+    {
+        SceneManager.LoadScene("Level26");
+    }
+
+    public void PlayLevel27()
+    {
+        SceneManager.LoadScene("Level27");
+    }
+
 
 }
 
