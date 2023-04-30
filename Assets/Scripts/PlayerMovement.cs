@@ -199,13 +199,15 @@ public class PlayerMovement : MonoBehaviour
             //Release Player
             if (Input.GetMouseButtonUp(0) && dragging)
             {
+                //FindObjectOfType<AudioManager>().Play("death_chime");
+
                 dragging = false;
 
                 Vector3 tempRotation = new Vector3(90f, 0f,
                     playerSprite.transform.localEulerAngles.z);
                 GameObject tempFX = Instantiate(releaseFX, releasePoint.transform.position,
                     releasePoint.transform.rotation);
-                Destroy(tempFX, 0.2f);
+                Destroy(tempFX, 0.5f);
 
                 Vector3 slideDirection = Input.mousePosition - sliderCenter.position;
 
@@ -248,16 +250,25 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (waterCount > 0 && onBridge == 0)
+        if (waterCount > 0 && onBridge == 0 && canMove)
         {
             health -= Time.deltaTime;
             healthSlider.value = health;
             //fill.color.r = gradient.Evaluate(healthSlider.normalizedValue).r;
             if (health <= 0) {
-                StartCoroutine("RespawnTimer");
+                FindObjectOfType<AudioManager>().Play("death_chime");
+                //DeathEffect();
+                rb.velocity = Vector2.zero;
+                canMove = false;
+                playerSprite.SetActive(false);
+                Invoke("Respawn", 3f);
+                //StartCoroutine("RespawnTimer");
+                //print("a");
+                //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                //print("b");
             }
         }
-        else {
+        else if (canMove) {
             if (health < timeToDeath) {
                 health += Time.deltaTime * reviveMultiplier;
                 healthSlider.value = health;
@@ -269,6 +280,10 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+    }
+
+    void DeathEffect() {
+        FindObjectOfType<AudioManager>().Play("death_chime");
     }
 
     void AddPoints(List<Vector2> list, Vector2 startPos, Vector2 direction, float distance) {
@@ -313,13 +328,26 @@ public class PlayerMovement : MonoBehaviour
         return result;
     }
 
+    void Respawn()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    
+    /*
     IEnumerator RespawnTimer() {
+        
         rb.velocity = Vector2.zero;
         canMove = false;
         playerSprite.SetActive(false);
-        yield return new WaitForSeconds(2f);
+        //FindObjectOfType<AudioManager>().Play("death_chime");
+        while (FindObjectOfType<AudioManager>().isPlaying("death_chime")) {
+            yield return null;
+        }
+        //yield return new WaitForSeconds(5f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+    */
+    
 
     void PlayerControlElementsActive(bool active) {
         slideBackground.SetActive(active);

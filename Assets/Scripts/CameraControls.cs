@@ -120,7 +120,7 @@ public class CameraControls : MonoBehaviour
         float midpoint = duration / 2;
 
         duration *= velocity;
-        while (elapsed < duration)
+        while (elapsed < duration && Time.timeScale != 0)
         {
             float timeStrength = midpoint - Mathf.Abs(midpoint - elapsed);
 
@@ -161,7 +161,7 @@ public class CameraControls : MonoBehaviour
         float midpoint = duration / 2;
 
         duration *= velocity;
-        while (elapsed < duration)
+        while (elapsed < duration && Time.timeScale != 0)
         {
             float timeStrength = duration - elapsed;
 
