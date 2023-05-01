@@ -15,13 +15,10 @@ public class PistonController : MonoBehaviour
     public float retractSpeed = 0.3f;
     public float extendSpeed = 2;
 
-    public float buffer = 0.05f;
+   // public float buffer = 0.05f;
 
-    bool isExtending = true;
+    bool isExtending;
     public bool beginsExtended = true;
-
-    //public float time;
-    //public float lastTime;
 
     float dist;
     float lastDist;
@@ -37,97 +34,45 @@ public class PistonController : MonoBehaviour
             moveSpeed = retractSpeed;
             targetPoint = retractPoint;
             dist = (transform.position - targetPoint.position).magnitude;
-            lastDist = dist;
-            //time = 1;
-            //lastTime = 1;
+            targetVec = (targetPoint.position - transform.position).normalized;
+            lastDist = dist + 5f;
         }
         else {
             transform.position = retractPoint.position;
             isExtending = true;
             moveSpeed = extendSpeed;
-            targetPoint = retractPoint;
+            targetPoint = extendPoint;
             dist = (transform.position - targetPoint.position).magnitude;
-            lastDist = dist;
-            //time = 0;
-            //lastTime = 0;
+            targetVec = (targetPoint.position - transform.position).normalized;
+            lastDist = dist + 5f;
         }
+
+        rb.MovePosition(transform.position + (targetVec * moveSpeed));
     }
 
     private void FixedUpdate()
     {
         dist = (transform.position - targetPoint.position).magnitude;
 
-        if (lastDist < dist) { //Swap
+        if (lastDist < dist || targetVec.normalized == new Vector3(0, 0, 0)) { //Swap
             if (isExtending)
             {
-
+                isExtending = false;
+                moveSpeed = retractSpeed;
+                targetPoint = retractPoint;
+                dist = (transform.position - targetPoint.position).magnitude;
+                targetVec = (targetPoint.position - transform.position).normalized;
             }
-            else { 
-            
+            else {
+                isExtending = true;
+                moveSpeed = extendSpeed;
+                targetPoint = extendPoint;
+                dist = (transform.position - targetPoint.position).magnitude;
+                targetVec = (targetPoint.position - transform.position).normalized;
             }
         }
-
-        if (isExtending) //Is Extending
-        {
-
-        }
-        else { //Is Not Extending
         
-        }
-
         lastDist = dist;
-
-        /*
-        time = Mathf.PingPong(Time.time * moveSpeed, 1);
-        if (beginsExtended) time = 1 - time;
-
-        if (isExtending && lastTime > time) { //Start Retracting
-            print(1);
-
-            isExtending = false;
-            moveSpeed = retractSpeed;
-            time = Mathf.PingPong(Time.time * moveSpeed, 1);
-            //if (beginsExtended) time = 1 - time;
-        }
-        else if (!isExtending && lastTime < time) //Start Extending
-        {
-            print(2);
-
-            isExtending = true;
-            moveSpeed = extendSpeed;
-            time = Mathf.PingPong(Time.time * moveSpeed, 1);
-            //if (beginsExtended) time = 1 - time;
-        }
-        
-        Vector3 newPosition = Vector3.Lerp(retractPoint.position, extendPoint.position, time);
-        rb.MovePosition(newPosition);
-
-        lastTime = time;
-        */
-        /*
-        //Extending -> Not Extending
-        if (isExtending && Mathf.Abs(transform.position.x - extendPoint.position.x) <= buffer
-        && Mathf.Abs(transform.position.y - extendPoint.position.y) <= buffer)
-        {
-            transform.position = extendPoint.position;
-            isExtending = false;
-            targetVec = retractPoint.position - transform.position;
-            targetVec = targetVec.normalized;
-            moveSpeed = retractSpeed;
-        }
-
-        //Not Extending -> Extending
-        else if (!isExtending && Mathf.Abs(transform.position.x - retractPoint.position.x) <= buffer
-            && Mathf.Abs(transform.position.y - retractPoint.position.y) <= buffer)
-        {
-            transform.position = retractPoint.position;
-            isExtending = true;
-            targetVec = extendPoint.position - transform.position;
-            targetVec = targetVec.normalized;
-            moveSpeed = extendSpeed;
-        }
-        
         rb.MovePosition(transform.position + (targetVec * moveSpeed));
-        */
     }
 }

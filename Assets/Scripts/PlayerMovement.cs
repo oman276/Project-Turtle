@@ -65,6 +65,8 @@ public class PlayerMovement : MonoBehaviour
 
     int onBridge = 0;
 
+    ScreenShake ss;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -86,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
         healthSlider.maxValue = timeToDeath;
         healthSlider.minValue = 0;
         healthSlider.value = health;
+        ss = FindObjectOfType<ScreenShake>();
         //fill.color = gradient.Evaluate(healthSlider.normalizedValue);
     }
 
@@ -257,6 +260,7 @@ public class PlayerMovement : MonoBehaviour
             //fill.color.r = gradient.Evaluate(healthSlider.normalizedValue).r;
             if (health <= 0) {
                 FindObjectOfType<AudioManager>().Play("death_chime");
+                this.gameObject.GetComponent<CircleCollider2D>().enabled = false;
                 //DeathEffect();
                 rb.velocity = Vector2.zero;
                 canMove = false;
@@ -372,13 +376,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "World Boundary")
         {
-            camControls.Shake(wallImpactDuration, rb.velocity.magnitude);
-        }
-        else if (collision.gameObject.tag == "World Boundary")
-        {
-            camControls.Shake(wallImpactDuration, rb.velocity.magnitude);
+            //camControls.Shake(wallImpactDuration, rb.velocity.magnitude);
+            ss.Shake(rb.velocity.magnitude, 0);
         }
     }
 
