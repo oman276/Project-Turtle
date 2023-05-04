@@ -655,7 +655,7 @@ MonoBehaviour:
   maxDistance: 0
   dragging: 0
   timeToDeath: 1.5
-  reviveMultiplier: 0.1
+  reviveMultiplier: 1.3
   healthSlider: {fileID: 1566702008}
   gradient:
     serializedVersion: 2
@@ -688,6 +688,8 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   fill: {fileID: 22582368}
   background: {fileID: 1016765202}
+  fadeState: 0
+  healthDelay: 2.5
 --- !u!1 &5011035036420977183
 GameObject:
   m_ObjectHideFlags: 0

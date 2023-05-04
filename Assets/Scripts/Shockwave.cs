@@ -14,10 +14,12 @@ public class Shockwave : MonoBehaviour
 
     SpriteRenderer sr;
 
+    public bool expand = true;
+
     // Start is called before the first frame update
     void Start()
     {
-        speed = (endSize - startSize) / cycleLength;
+        speed = Mathf.Abs(endSize - startSize) / cycleLength;
         size = startSize;
 
         sr = GetComponent<SpriteRenderer>();
@@ -26,14 +28,31 @@ public class Shockwave : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (size <= endSize)
+        if (expand)
         {
-            size += speed * Time.deltaTime;
-            transform.localScale = new Vector3(size, size, size);
-            sr.color = new Color(1.0f, 1.0f, 1.0f, 1 - (size / endSize));
+            if (size <= endSize)
+            {
+                size += speed * Time.deltaTime;
+                transform.localScale = new Vector3(size, size, size);
+                sr.color = new Color(1.0f, 1.0f, 1.0f, 1 - (size / endSize));
+            }
+            else
+            {
+                Destroy(this.gameObject);
+            }
         }
         else {
-            Destroy(this.gameObject);
+            if (size >= endSize)
+            {
+                
+                size -= speed * Time.deltaTime;
+                transform.localScale = new Vector3(size, size, size);
+                sr.color = new Color(1.0f, 1.0f, 1.0f, (endSize / size) -0.3f);
+            }
+            else
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 }

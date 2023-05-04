@@ -5,6 +5,13 @@ using UnityEngine.UI;
 
 public class ObjectFade : MonoBehaviour
 {
+
+    PlayerMovement pm;
+    private void Start()
+    {
+        pm = FindObjectOfType<PlayerMovement>();
+    }
+
     public void FadeOut(float t, Text i)
     {
         StartCoroutine(FadeTextToZeroAlpha(t, i));
@@ -16,14 +23,14 @@ public class ObjectFade : MonoBehaviour
     }
 
 
-    public void FadeOut(float t, Image i)
+    public void FadeOut(float t, Image i, bool isPlayer = false)
     {
-        StartCoroutine(FadeImageToZeroAlpha(t, i));
+        StartCoroutine(FadeImageToZeroAlpha(t, i, isPlayer));
     }
 
-    public void FadeIn(float t, Image i)
+    public void FadeIn(float t, Image i, bool isPlayer = false)
     {
-        StartCoroutine(FadeImageToFullAlpha(t, i));
+        StartCoroutine(FadeImageToFullAlpha(t, i, isPlayer));
     }
 
     public void FadeIn(float t, GameObject obj)
@@ -57,7 +64,7 @@ public class ObjectFade : MonoBehaviour
     }
 
 
-    IEnumerator FadeImageToFullAlpha(float t, Image i)
+    IEnumerator FadeImageToFullAlpha(float t, Image i, bool isPlayer)
     {
         i.color = new Color(i.color.r, i.color.g, i.color.b, 0);
         while (i.color.a < 1.0f)
@@ -67,13 +74,22 @@ public class ObjectFade : MonoBehaviour
         }
     }
 
-    IEnumerator FadeImageToZeroAlpha(float t, Image i)
+    IEnumerator FadeImageToZeroAlpha(float t, Image i, bool isPlayer)
     {
         i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a);
         while (i && i.color.a > 0.0f)
         {
+            if (isPlayer) {
+                if (pm.fadeState != 4) {
+                    i.color = new Color(i.color.r, i.color.g, i.color.b, 1);
+                    break;
+                }
+            }
             i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t));
             yield return null;
+        }
+        if (pm.fadeState == 4) {
+            pm.fadeState = 0;
         }
     }
 

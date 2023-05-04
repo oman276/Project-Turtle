@@ -18,10 +18,14 @@ public class ExplosiveBarrel : MonoBehaviour
 
     bool destroyed = false;
 
+    ScreenShake ss;
+
     private void Start()
     {
         cc = GetComponent<CircleCollider2D>();
         radius = cc.radius;
+
+        ss = FindObjectOfType<ScreenShake>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -49,6 +53,10 @@ public class ExplosiveBarrel : MonoBehaviour
         GameObject tempFX = Instantiate(explosionEffect, this.transform.position,
             this.transform.rotation);
         Destroy(tempFX, 1f);
+
+        GameObject player = GameObject.Find("Player Object");
+        ss.Shake(17, Vector2.Distance(player.transform.position, this.transform.position));
+
         Destroy(this.gameObject);
     }
 

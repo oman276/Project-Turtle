@@ -67,6 +67,14 @@ public class PlayerMovement : MonoBehaviour
 
     ScreenShake ss;
 
+    //0 - off
+    //1 - active
+    //2 - waiting to recharge
+    //3 - recharging
+    //4 - fade out
+    public int fadeState = 0;
+    public float healthDelay = 2.5f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -261,33 +269,25 @@ public class PlayerMovement : MonoBehaviour
             if (health <= 0) {
                 FindObjectOfType<AudioManager>().Play("death_chime");
                 this.gameObject.GetComponent<CircleCollider2D>().enabled = false;
-                //DeathEffect();
                 rb.velocity = Vector2.zero;
                 canMove = false;
                 playerSprite.SetActive(false);
                 Invoke("Respawn", 3f);
-                //StartCoroutine("RespawnTimer");
-                //print("a");
-                //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                //print("b");
             }
         }
         else if (canMove) {
-            if (health < timeToDeath) {
+            if (fadeState == 3) {
                 health += Time.deltaTime * reviveMultiplier;
                 healthSlider.value = health;
                 //fill.color = gradient.Evaluate(healthSlider.normalizedValue);
                 if (health >= timeToDeath) {
+                    fadeState = 4;
                     health = timeToDeath;
-                    objectFade.FadeOut(1.5f, background);
-                    objectFade.FadeOut(1.5f, fill);
+                    objectFade.FadeOut(1.5f, background, true);
+                    objectFade.FadeOut(1.5f, fill, true);
                 }
             }
         }
-    }
-
-    void DeathEffect() {
-        FindObjectOfType<AudioManager>().Play("death_chime");
     }
 
     void AddPoints(List<Vector2> list, Vector2 startPos, Vector2 direction, float distance) {
@@ -337,21 +337,6 @@ public class PlayerMovement : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     
-    /*
-    IEnumerator RespawnTimer() {
-        
-        rb.velocity = Vector2.zero;
-        canMove = false;
-        playerSprite.SetActive(false);
-        //FindObjectOfType<AudioManager>().Play("death_chime");
-        while (FindObjectOfType<AudioManager>().isPlaying("death_chime")) {
-            yield return null;
-        }
-        //yield return new WaitForSeconds(5f);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-    */
-    
 
     void PlayerControlElementsActive(bool active) {
         slideBackground.SetActive(active);
@@ -381,14 +366,22 @@ public class PlayerMovement : MonoBehaviour
             //camControls.Shake(wallImpactDuration, rb.velocity.magnitude);
             ss.Shake(rb.velocity.magnitude, 0);
         }
+        else if (collision.gameObject.tag == "Piston") {
+            ss.Shake(5, 0);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Water")
         {
-            objectFade.FadeIn(0.1f, background);
-            objectFade.FadeIn(0.1f, fill);
+            //objectFade.FadeIn(0.1f, background, true);
+            //objectFade.FadeIn(0.1f, fill, true);
+            fadeState = 1;
+
+            background.color = new Color(background.color.r, background.color.g, background.color.b, 1);
+            fill.color = new Color(fill.color.r, fill.color.g, fill.color.b, 1);
+
             ++waterCount;
         }
         else if (collision.gameObject.tag == "Treadmill") {
@@ -402,15 +395,35 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.tag == "Water")
         {
             --waterCount;
+            if (waterCount == 0) {
+                fadeState = 2;
+                StartCoroutine("WaitToRefill");
+            }
+            
+            /*
             if (health == timeToDeath) {
                 objectFade.FadeOut(1.5f, background);
                 objectFade.FadeOut(1.5f, fill);
             }
+            */
         }
         else if (collision.gameObject.tag == "Treadmill")
         {
             --onTreadmill;
             print("- : onTreadmill " + onTreadmill);
+        }
+    }
+
+    IEnumerator WaitToRefill() {
+        float startTime = Time.time;
+        while (Time.time - startTime < healthDelay) {
+            if (fadeState != 2) {
+                break;
+            }
+            yield return null;
+        }
+        if (fadeState == 2) {
+            fadeState = 3;
         }
     }
 }

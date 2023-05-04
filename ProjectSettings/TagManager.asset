@@ -18,6 +18,7 @@ TagManager:
   - Rolling Projectile
   - Rocket
   - Portal
+  - Piston
   layers:
   - Default
   - TransparentFX

@@ -148,5 +148,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originPoint: {fileID: 8475381212928749830}
   shockwave: {fileID: 4560627297242427835, guid: 5befd45267d2c7a4c82ba2cd11f2d216, type: 3}
+  preShockwave: {fileID: 3608966239069508122, guid: 6a4b6c28c9f84354c88806f0b265011c, type: 3}
   initialDelay: 3
   timeBetweenCycles: 3

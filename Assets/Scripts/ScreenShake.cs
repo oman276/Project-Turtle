@@ -12,15 +12,18 @@ public class ScreenShake : MonoBehaviour
 
     public float maxShake = 1f;
     public float maxTime = 2.5f;
+    public float minTime = 0.5f;
 
     float duration = 0;
+    GameObject camObj;
 
     //public float multiplier = 1f;
     Vector3 originalPos;
 
     private void Start()
     {
-        originalPos = transform.localPosition;
+        camObj = transform.Find("Main Camera").gameObject;
+        originalPos = camObj.transform.localPosition;
     }
 
 
@@ -44,6 +47,9 @@ public class ScreenShake : MonoBehaviour
         {
             duration = maxTime;
         }
+        else if (duration <= minTime) {
+            duration = minTime;
+        }
     }
 
     public void Shake(Vector2 velocity, float distance)
@@ -59,12 +65,12 @@ public class ScreenShake : MonoBehaviour
             {
                 float curPower = duration / maxTime;
                 Vector2 direction = Random.insideUnitCircle * curPower;
-                transform.localPosition = new Vector3(direction.x, direction.y, originalPos.z);
+                camObj.transform.localPosition = new Vector3(direction.x, direction.y, originalPos.z);
                 duration -= Time.deltaTime;
             }
             else {
                 duration = 0;
-                transform.localPosition = originalPos;
+                camObj.transform.localPosition = originalPos;
             }
         }
     }

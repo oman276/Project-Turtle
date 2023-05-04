@@ -60,7 +60,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 29
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -94,6 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3435273973629996531}
   - component: {fileID: 3435273973629996530}
+  - component: {fileID: 737984842}
   m_Layer: 0
   m_Name: Camera Parent
   m_TagString: Untagged
@@ -139,3 +140,25 @@ MonoBehaviour:
   zoomUpLimit: 10
   dragZoomInFactor: 0.25
   speedZoomInFactor: 0.75
+  shakeEnabled: 1
+  isMapScaleButton: 0
+  mapScale: 29
+  mapTransform: {fileID: 0}
+--- !u!114 &737984842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3435273973629996532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2f376b2d4fef6e4eb7bf2fe81f12ff8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeEnabled: 1
+  velocityLimit: 45
+  distanceLimit: 3
+  maxShake: 0.8
+  maxTime: 2.5
+  minTime: 0.3

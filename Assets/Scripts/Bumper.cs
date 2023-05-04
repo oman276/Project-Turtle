@@ -5,6 +5,8 @@ using UnityEngine;
 public class Bumper : MonoBehaviour
 {
     public float multiply = 1.2f;
+    public bool isMoving = false;
+    public float movingMultiplier = 1f;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -18,8 +20,25 @@ public class Bumper : MonoBehaviour
             Vector2 newVector = (collision.ClosestPoint(collision.gameObject.transform.position)
                 - thisPos).normalized;
 
-            rb.velocity = Vector2.zero;
-            rb.velocity = newVector * multiply * oldMag;
+
+            if (!isMoving)
+            {
+                rb.velocity = Vector2.zero;
+                rb.velocity = newVector * multiply * oldMag;
+            }
+            else {
+                RigidbodyRotate rbr = this.transform.parent.gameObject.GetComponent<RigidbodyRotate>();
+                RigidbodyHorizontal rbh = this.gameObject.GetComponent<RigidbodyHorizontal>();
+                if (rbr)
+                {
+                    rb.velocity = Vector2.zero;
+                    rb.velocity = newVector * multiply * (oldMag + (Mathf.Abs(rbr.speed) * movingMultiplier));
+                }
+                else if (rbh) {
+                    rb.velocity = Vector2.zero;
+                    rb.velocity = newVector * multiply * (oldMag + (10 * movingMultiplier));
+                }
+            }
         }
     }
 }
