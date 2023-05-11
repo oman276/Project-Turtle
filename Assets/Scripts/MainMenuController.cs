@@ -31,7 +31,7 @@ public class MainMenuController : MonoBehaviour
 
     public void PlayLevel2()
     {
-        SceneManager.LoadScene("Level2");
+        SceneManager.LoadScene("Level2-1v2");
     }
 
     public void PlayLevel3()
@@ -41,47 +41,47 @@ public class MainMenuController : MonoBehaviour
 
     public void PlayLevel4()
     {
-        SceneManager.LoadScene("Level4");
+        SceneManager.LoadScene("Level2-2v2");
     }
 
     public void PlayLevel5()
     {
-        SceneManager.LoadScene("Level5");
+        SceneManager.LoadScene("Level4v2");
     }
 
     public void PlayLevel6()
     {
-        SceneManager.LoadScene("Level6");
+        SceneManager.LoadScene("Level5-1v2");
     }
 
     public void PlayLevel7()
     {
-        SceneManager.LoadScene("Level7");
+        SceneManager.LoadScene("Level5-2v2");
     }
 
     public void PlayLevel8()
     {
-        SceneManager.LoadScene("Level8");
+        SceneManager.LoadScene("Level6v2");
     }
 
     public void PlayLevel9()
     {
-        SceneManager.LoadScene("Level9");
+        SceneManager.LoadScene("Level7v2");
     }
 
     public void PlayLevel10()
     {
-        SceneManager.LoadScene("Level10");
+        SceneManager.LoadScene("Level8");
     }
 
     public void PlayLevel11()
     {
-        SceneManager.LoadScene("Level11");
+        SceneManager.LoadScene("Level9");
     }
 
     public void PlayLevel12()
     {
-        SceneManager.LoadScene("Level12");
+        SceneManager.LoadScene("Level10v2");
     }
 
     public void PlayLevel13()
@@ -141,17 +141,17 @@ public class MainMenuController : MonoBehaviour
 
     public void PlayLevel24()
     {
-        SceneManager.LoadScene("Level24");
+        SceneManager.LoadScene("Level25");
     }
 
     public void PlayLevel25()
     {
-        SceneManager.LoadScene("Level25");
+        SceneManager.LoadScene("Level26");
     }
 
     public void PlayLevel26()
     {
-        SceneManager.LoadScene("Level26");
+        SceneManager.LoadScene("Level27");
     }
 
     public void PlayLevel27()

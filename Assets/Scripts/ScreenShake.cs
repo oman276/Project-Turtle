@@ -64,7 +64,7 @@ public class ScreenShake : MonoBehaviour
             if (duration > 0)
             {
                 float curPower = duration / maxTime;
-                Vector2 direction = Random.insideUnitCircle * curPower;
+                Vector2 direction = Random.insideUnitCircle * curPower * Time.timeScale;
                 camObj.transform.localPosition = new Vector3(direction.x, direction.y, originalPos.z);
                 duration -= Time.deltaTime;
             }
