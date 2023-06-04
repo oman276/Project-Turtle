@@ -7,6 +7,12 @@ public class CameraControls : MonoBehaviour
 
     public float speed = 2f;
     public GameObject player;
+    public GameObject head;
+    public GameObject rightarm;
+    public GameObject leftarm;
+    public GameObject leftleg;
+    public GameObject rightleg;
+    public GameObject tail;
     public GameObject cameraObject;
     public float shakeCap = 2f;
     public float multiplier = 1f;

@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4393235900918049003}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.106107, y: 0.10282977, z: 0}
+  m_LocalPosition: {x: 4, y: 0.10282977, z: 0}
   m_LocalScale: {x: 0.4615314, y: 0.4615314, z: 0.4615314}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -56,8 +56,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4393235901518471307}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.0309502}
-  m_LocalScale: {x: 0.13379, y: 0.13379, z: 0.13379}
+  m_LocalPosition: {x: -0.007, y: -0.063, z: -1.031}
+  m_LocalScale: {x: 0.34223482, y: 0.34223482, z: 0.34223482}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4393235902405483924}
@@ -104,7 +104,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c35a7d7e377c616469485036a278da19, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 321886febecdca74cbb8328911cc23dc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -140,8 +140,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4393235901692732472}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: -1.0309502}
-  m_LocalScale: {x: 0.28988278, y: 0.28988278, z: 0.28988278}
+  m_LocalPosition: {x: -0.072, y: 0.213, z: -1.0309502}
+  m_LocalScale: {x: 0.34751147, y: 0.34751147, z: 0.34751147}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4393235900918049002}
@@ -189,12 +189,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 73aab737bb3192647a3e697017b426a9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a5c089a9262c08d488690809c51fb8b9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 4.18, y: 2.65}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -279,9 +279,9 @@ MonoBehaviour:
   firepoint: {fileID: 4393235900918049002}
   initialDelay: 5
   fireDelay: 5
-  lowBound: 0
-  highBound: 180
   explosionFX: {fileID: 5904827051141144812, guid: ebad8a0b439371045a186f30378b4afa, type: 3}
+  position: 78
+  angle: 0
 --- !u!58 &6492597392367525097
 CircleCollider2D:
   m_ObjectHideFlags: 0
