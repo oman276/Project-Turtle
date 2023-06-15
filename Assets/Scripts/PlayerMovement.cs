@@ -7,6 +7,10 @@ using UnityEngine.UI;
 public class PlayerMovement : MonoBehaviour
 {
 
+    public int setTurtleAnimation;
+    Vector3 saveHeadPos;
+    Vector3 saveTailPos;
+
     Rigidbody2D rb;
     public float forceMultiplier;
 
@@ -19,6 +23,12 @@ public class PlayerMovement : MonoBehaviour
     public float rbVelocityUpperLimit = 0.7f;
 
     public GameObject playerSprite;
+    public GameObject head;
+    public GameObject rightarm;
+    public GameObject leftarm;
+    public GameObject rightleg;
+    public GameObject leftleg;
+    public GameObject tail;
     public float rotationSpeed = 0.2f;
     public GameObject directionOrb;
 
@@ -98,11 +108,42 @@ public class PlayerMovement : MonoBehaviour
         healthSlider.value = health;
         ss = FindObjectOfType<ScreenShake>();
         //fill.color = gradient.Evaluate(healthSlider.normalizedValue);
+
+        saveHeadPos = head.transform.localPosition;
+
+        saveTailPos = tail.transform.localPosition;
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
+
+        float step = 1.4f * Time.deltaTime;
+        
+        float step2 = 2.5f * Time.deltaTime;
+
+        if(setTurtleAnimation == 1) {
+            rightleg.transform.Rotate(0, 0, -350 * Time.deltaTime);
+            leftleg.transform.Rotate(0, 0, 350 * Time.deltaTime);
+            rightarm.transform.Rotate(0, 0, 400 * Time.deltaTime);
+            leftarm.transform.Rotate(0, 0, -400 * Time.deltaTime);
+            head.transform.position = Vector3.MoveTowards(head.transform.position, playerSprite.transform.position, step);
+            tail.transform.position = Vector3.MoveTowards(tail.transform.position, playerSprite.transform.position, step);
+            if(Vector3.Distance (head.transform.position, playerSprite.transform.position) <= 0.01f) {
+                setTurtleAnimation = 2;
+            }
+        } else if(setTurtleAnimation == 2) {
+            rightleg.transform.rotation = Quaternion.RotateTowards(rightleg.transform.rotation, head.transform.rotation, 250 * Time.deltaTime);
+            leftleg.transform.rotation = Quaternion.RotateTowards(leftleg.transform.rotation, head.transform.rotation, 250 * Time.deltaTime);
+            rightarm.transform.rotation = Quaternion.RotateTowards(rightarm.transform.rotation, head.transform.rotation, 250 * Time.deltaTime);
+            leftarm.transform.rotation = Quaternion.RotateTowards(leftarm.transform.rotation, head.transform.rotation, 250 * Time.deltaTime);
+            head.transform.localPosition = Vector3.MoveTowards(head.transform.localPosition, saveHeadPos, step2);
+            tail.transform.localPosition = Vector3.MoveTowards(tail.transform.localPosition, saveTailPos, step2);
+            if(Vector3.Distance(head.transform.localPosition, saveHeadPos) <= 0.01f && leftleg.transform.eulerAngles.z <= 1) {
+                setTurtleAnimation = 0;
+            }
+        }
+
         if (rb.velocity.magnitude >= rbVelocityUpperLimit && !dragging)
         {
             if (rotationSpeed == 0)
@@ -361,6 +402,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        setTurtleAnimation = 1;
+
         if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "World Boundary")
         {
             //camControls.Shake(wallImpactDuration, rb.velocity.magnitude);
